@@ -1,1 +1,54 @@
-databaseChangeLog: []
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-students
+      author: nazarbek
+      changes:
+        - createTable:
+            tableName: students
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column: { name: first_name, type: VARCHAR(100), constraints: { nullable: false } }
+              - column: { name: last_name,  type: VARCHAR(100), constraints: { nullable: false } }
+              - column: { name: email,      type: VARCHAR(150), constraints: { nullable: false, unique: true } }
+              - column: { name: age,        type: INT }
+
+  - changeSet:
+      id: 002-create-teachers
+      author: nazarbek
+      changes:
+        - createTable:
+            tableName: teachers
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column: { name: first_name, type: VARCHAR(100), constraints: { nullable: false } }
+              - column: { name: last_name,  type: VARCHAR(100), constraints: { nullable: false } }
+              - column: { name: email,      type: VARCHAR(150), constraints: { nullable: false, unique: true } }
+
+  - changeSet:
+      id: 003-create-courses
+      author: nazarbek
+      changes:
+        - createTable:
+            tableName: courses
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column: { name: title, type: VARCHAR(200), constraints: { nullable: false } }
+              - column: { name: code,  type: VARCHAR(50),  constraints: { nullable: false, unique: true } }
