@@ -52,3 +52,68 @@ databaseChangeLog:
                     nullable: false
               - column: { name: title, type: VARCHAR(200), constraints: { nullable: false } }
               - column: { name: code,  type: VARCHAR(50),  constraints: { nullable: false, unique: true } }
+  - changeSet:
+      id: 004-add-relations
+      author: nazarbek
+      changes:
+
+        - addColumn:
+            tableName: courses
+            columns:
+              - column:
+                  name: teacher_id
+                  type: BIGINT
+
+        - addForeignKeyConstraint:
+            baseTableName: courses
+            baseColumnNames: teacher_id
+            referencedTableName: teachers
+            referencedColumnNames: id
+            constraintName: fk_courses_teacher
+
+        - addColumn:
+            tableName: students
+            columns:
+              - column:
+                  name: teacher_id
+                  type: BIGINT
+
+        - addForeignKeyConstraint:
+            baseTableName: students
+            baseColumnNames: teacher_id
+            referencedTableName: teachers
+            referencedColumnNames: id
+            constraintName: fk_students_teacher
+
+        - createTable:
+            tableName: student_courses
+            columns:
+              - column:
+                  name: student_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: course_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+        - addPrimaryKey:
+            tableName: student_courses
+            columnNames: student_id, course_id
+            constraintName: pk_student_courses
+
+        - addForeignKeyConstraint:
+            baseTableName: student_courses
+            baseColumnNames: student_id
+            referencedTableName: students
+            referencedColumnNames: id
+            constraintName: fk_sc_student
+
+        - addForeignKeyConstraint:
+            baseTableName: student_courses
+            baseColumnNames: course_id
+            referencedTableName: courses
+            referencedColumnNames: id
+            constraintName: fk_sc_course

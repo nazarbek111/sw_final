@@ -1,6 +1,7 @@
 package kz.narxoz.sw_final.controller;
 
-import kz.narxoz.sw_final.entity.Course;
+import kz.narxoz.sw_final.dto.CourseDto;
+import kz.narxoz.sw_final.mapper.CourseMapper;
 import kz.narxoz.sw_final.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -15,26 +16,26 @@ public class CourseController {
     private final CourseService courseService;
 
     @GetMapping
-    public List<Course> getAll() {
-        return courseService.getAll();
+    public List<CourseDto> getAll() {
+        return courseService.getAll()
+                .stream()
+                .map(CourseMapper::toDto)
+                .toList();
     }
 
     @GetMapping("/{id}")
-    public Course getById(@PathVariable Long id) {
-        return courseService.getById(id);
+    public CourseDto getById(@PathVariable Long id) {
+        return CourseMapper.toDto(courseService.getById(id));
     }
 
     @PostMapping
-    public Course create(@RequestBody Course course) {
-        return courseService.create(course);
+    public CourseDto create(@RequestBody CourseDto dto) {
+        return CourseMapper.toDto(courseService.create(CourseMapper.toEntity(dto)));
     }
 
     @PutMapping("/{id}")
-    public Course update(
-            @PathVariable Long id,
-            @RequestBody Course course
-    ) {
-        return courseService.update(id, course);
+    public CourseDto update(@PathVariable Long id, @RequestBody CourseDto dto) {
+        return CourseMapper.toDto(courseService.update(id, CourseMapper.toEntity(dto)));
     }
 
     @DeleteMapping("/{id}")

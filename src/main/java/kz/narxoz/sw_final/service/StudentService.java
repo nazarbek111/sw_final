@@ -1,15 +1,20 @@
 package kz.narxoz.sw_final.service;
 
-import kz.narxoz.sw_final.dto.StudentDto;
+import kz.narxoz.sw_final.entity.Student;
 
 import java.util.List;
 
 public interface StudentService {
-    List<StudentDto> findAll();
-    StudentDto findById(Long id);
-    StudentDto create(StudentDto dto);
-    StudentDto update(Long id, StudentDto dto);
+
+    List<Student> getAll();
+
+    Student getById(Long id);
+
+    Student create(Student student);
+
+    Student update(Long id, Student student);
+
     void delete(Long id);
 
-    List<StudentDto> search(Integer minAge);
+    List<Student> search(Integer minAge);
 }

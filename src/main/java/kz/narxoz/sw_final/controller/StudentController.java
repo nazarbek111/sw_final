@@ -1,50 +1,45 @@
 package kz.narxoz.sw_final.controller;
 
 import kz.narxoz.sw_final.dto.StudentDto;
+import kz.narxoz.sw_final.mapper.StudentMapper;
 import kz.narxoz.sw_final.service.StudentService;
-import org.springframework.http.ResponseEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/students")
+@RequiredArgsConstructor
 public class StudentController {
 
-    private final StudentService service;
-
-    public StudentController(StudentService service) {
-        this.service = service;
-    }
+    private final StudentService studentService;
 
     @GetMapping
-    public ResponseEntity<List<StudentDto>> all() {
-        return ResponseEntity.ok(service.findAll());
+    public List<StudentDto> getAll() {
+        return studentService.getAll()
+                .stream()
+                .map(StudentMapper::toDto)
+                .toList();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StudentDto> one(@PathVariable Long id) {
-        return ResponseEntity.ok(service.findById(id));
+    public StudentDto getById(@PathVariable Long id) {
+        return StudentMapper.toDto(studentService.getById(id));
     }
 
     @PostMapping
-    public ResponseEntity<StudentDto> create(@RequestBody StudentDto dto) {
-        return ResponseEntity.ok(service.create(dto));
+    public StudentDto create(@RequestBody StudentDto dto) {
+        return StudentMapper.toDto(studentService.create(StudentMapper.toEntity(dto)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StudentDto> update(@PathVariable Long id, @RequestBody StudentDto dto) {
-        return ResponseEntity.ok(service.update(id, dto));
+    public StudentDto update(@PathVariable Long id, @RequestBody StudentDto dto) {
+        return StudentMapper.toDto(studentService.update(id, StudentMapper.toEntity(dto)));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        service.delete(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/search")
-    public ResponseEntity<List<StudentDto>> search(@RequestParam(required = false) Integer minAge) {
-        return ResponseEntity.ok(service.search(minAge));
+    public void delete(@PathVariable Long id) {
+        studentService.delete(id);
     }
 }
