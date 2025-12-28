@@ -3,6 +3,8 @@ package kz.narxoz.sw_final.mapper;
 import kz.narxoz.sw_final.dto.StudentDto;
 import kz.narxoz.sw_final.entity.Student;
 
+import java.util.stream.Collectors;
+
 public class StudentMapper {
 
     public static StudentDto toDto(Student s) {
@@ -11,7 +13,12 @@ public class StudentMapper {
                 s.getFirstName(),
                 s.getLastName(),
                 s.getEmail(),
-                s.getAge()
+                s.getAge(),
+                s.getCourses() == null ? null :
+                        s.getCourses()
+                                .stream()
+                                .map(CourseMapper::toDto)
+                                .collect(Collectors.toSet())
         );
     }
 
