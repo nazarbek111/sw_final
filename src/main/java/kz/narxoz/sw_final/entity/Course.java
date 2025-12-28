@@ -2,6 +2,8 @@ package kz.narxoz.sw_final.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.Set;
+
 
 @Entity
 @Table(name = "courses")
@@ -16,4 +18,11 @@ public class Course {
 
     @Column(nullable = false, unique = true)
     private String code;
+
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
+
+    @ManyToMany(mappedBy = "courses")
+    private Set<Student> students;
 }
