@@ -10,6 +10,6 @@ public class StudentDto {
     private String lastName;
     private String email;
     private Integer age;
-    private Set<CourseDto> courses;
+    private java.util.Set<Long> courseIds;
 
 }

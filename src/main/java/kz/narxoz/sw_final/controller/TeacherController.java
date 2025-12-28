@@ -1,7 +1,7 @@
 package kz.narxoz.sw_final.controller;
 
 import kz.narxoz.sw_final.dto.TeacherDto;
-import kz.narxoz.sw_final.mapper.TeacherMapper;
+import kz.narxoz.sw_final.entity.Teacher;
 import kz.narxoz.sw_final.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,25 +17,22 @@ public class TeacherController {
 
     @GetMapping
     public List<TeacherDto> getAll() {
-        return teacherService.getAll()
-                .stream()
-                .map(TeacherMapper::toDto)
-                .toList();
+        return teacherService.getAll();
     }
 
     @GetMapping("/{id}")
     public TeacherDto getById(@PathVariable Long id) {
-        return TeacherMapper.toDto(teacherService.getById(id));
+        return teacherService.getById(id);
     }
 
     @PostMapping
-    public TeacherDto create(@RequestBody TeacherDto dto) {
-        return TeacherMapper.toDto(teacherService.create(TeacherMapper.toEntity(dto)));
+    public TeacherDto create(@RequestBody Teacher teacher) {
+        return teacherService.create(teacher);
     }
 
     @PutMapping("/{id}")
-    public TeacherDto update(@PathVariable Long id, @RequestBody TeacherDto dto) {
-        return TeacherMapper.toDto(teacherService.update(id, TeacherMapper.toEntity(dto)));
+    public TeacherDto update(@PathVariable Long id, @RequestBody Teacher teacher) {
+        return teacherService.update(id, teacher);
     }
 
     @DeleteMapping("/{id}")
