@@ -4,8 +4,15 @@ import kz.narxoz.sw_final.dto.StudentDto;
 import kz.narxoz.sw_final.entity.Student;
 
 public class StudentMapper {
+
     public static StudentDto toDto(Student s) {
-        return new StudentDto(s.getId(), s.getFirstName(), s.getLastName(), s.getEmail(), s.getAge());
+        return new StudentDto(
+                s.getId(),
+                s.getFirstName(),
+                s.getLastName(),
+                s.getEmail(),
+                s.getAge()
+        );
     }
 
     public static Student toEntity(StudentDto d) {

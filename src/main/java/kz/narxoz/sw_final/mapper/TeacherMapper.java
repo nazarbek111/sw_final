@@ -4,6 +4,7 @@ import kz.narxoz.sw_final.dto.TeacherDto;
 import kz.narxoz.sw_final.entity.Teacher;
 
 public class TeacherMapper {
+
     public static TeacherDto toDto(Teacher t) {
         return new TeacherDto(t.getId(), t.getFirstName(), t.getLastName(), t.getEmail());
     }
